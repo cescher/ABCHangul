@@ -1,0 +1,263 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /> 
+	<title>My Page</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+    
+    
+     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+	
+     <!-- 
+    <link rel="stylesheet" href="jquery.mobile-1.1.0.min.css" />
+    <script src="jquery-1.7.1.min.js"></script>   
+    <script src="jquery.mobile-1.1.0.min.js"></script>
+  	-->
+        
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.6.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="tts.js"></script>
+   
+    <script type="text/javascript" charset="utf-8">
+   		$(function() {
+    	
+	    	$('.action').bind('swiperight', function(event) { 
+	    	
+	    		//Action that will occur when the swipe class is swiped
+	    		
+	    		displayMessage(langSetting, 'left');
+	    	
+	    	});
+	    	
+	    	$('.action').bind('swipeleft', function(event) { 
+		    	
+	    		//Action that will occur when the swipe class is swiped
+	    		
+	    		displayMessage(langSetting, 'right'); 	
+	    	});
+	    	
+	    	
+			$('.action').bind('tap', function(event) { 
+		    	
+	    		//Action that will occur when the swipe class is swiped
+	    		
+	    		displayMessage(langSetting, 'right'); 	
+	    	});
+
+    	});
+	   
+
+    
+		var langSetting = 'en';
+		var direction = 'right';
+		
+		var str = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+		var temp = new Array();		
+		temp = str.split(",");
+		
+		str = "가,나,다,라,마,바,사,아,자,차,카,타,파,하";
+		var tempko = new Array();		
+		tempko = str.split(",");
+		
+		var index = 1;
+
+		function displayMessage(lang, direction) {
+			 langSetting = lang;
+			 if(langSetting=='en'){
+			 	 if(temp.length ==index){
+					index=0;		
+			 	}
+			 	$("#letterDiv"+lang).text(temp[index]);
+			 	
+			 	if(temp[index]=='A'){
+			 		speak('ay');
+			 	}else{
+			 		speak(temp[index]);
+			 	}
+			 	
+			 }else if(langSetting=='ko'){
+			 	
+			 	str = "가,나,다,라,마,바,사,아,자,차,카,타,파,하";
+			 	if(tempko.length ==index){
+					index=0;		
+				 }	 
+				$("#letterDiv"+langSetting).text(tempko[index]);
+				speak(tempko[index]);
+			 }	
+
+			 index++;
+			
+		}
+		
+		
+		function onLoad() {
+	        document.addEventListener("deviceready", onDeviceReady, false);
+	    }
+
+	    // PhoneGap is loaded and it is now safe to make calls PhoneGap methods
+	    //
+	    function onDeviceReady() {
+	        window.plugins.tts.startup(startupWin, fail);
+	    }
+
+	    function startupWin(result) {
+	        // When result is equal to STARTED we are ready to play
+	        if (result == TTS.STARTED) {
+	            window.plugins.tts.getLanguage(win, fail);
+	           
+	            window.plugins.tts.isLanguageAvailable("ko", function() {
+	                addLang("ko");
+	            }, fail);
+	            
+	            window.plugins.tts.isLanguageAvailable("en", function() {
+	                addLang("en");
+	            }, fail);
+
+	        }
+	    }
+
+	    function addLang(lang) {
+	        var langs = document.getElementById('langs');
+	        var anOption = document.createElement("OPTION") 
+	        anOption.innerText = lang; 
+	        anOption.Value = lang;
+	        langs.options.add(anOption); 
+	    }
+
+	    function changeLang() {
+	        var yourSelect = document.getElementById('langs');
+	        window.plugins.tts.setLanguage(yourSelect.options[yourSelect.selectedIndex].value, win, fail);
+	    }
+
+	    function win(result) {
+	        console.log(result);
+	        
+	    }
+
+	    function fail(result) {
+	       	alert("Error = " + result);
+       
+	    }
+
+	    function speak(val) {
+	        window.plugins.tts.speak(val);
+	    }
+	    
+	    function onPageLoad(){
+	    	alert('change');
+	    }
+		
+	  
+	    
+	    $(document).delegate("#home", "pageinit", function() {
+	    	$("#hrefalphabet").click(function(e){
+	    		 langSetting = 'en';
+	    		 index=0;
+	    		 displayMessage(langSetting, 'right');
+	        });
+	  	    
+	  	    $("#hrefhangul").click(function(e){
+	  	    	 langSetting = 'ko';
+	  	    	 index=0;
+	  	    	 displayMessage(langSetting, 'right');
+	        });
+	  	    
+	  	  		/*var viewport = {
+				    width  : $(window).width(),
+				    height : $(window).height()
+				  };
+			
+				
+				var tables = $('table[id=tableContent]');
+				
+				tables.each(function(index, table){							
+					table.setAttribute("width", viewport.width-20);
+					table.setAttribute("height", viewport.height-20);
+				});*/
+			
+	  	    
+	    });
+	    
+	
+	    
+	</script>
+
+
+
+</head> 
+<body onload="onLoad()"> 
+
+<!-- Start of first page -->
+	<div data-role="page" id="home">
+	
+		<div data-role="header">
+			<h1>Language</h1>
+		</div><!-- /header -->
+	
+	
+		<div data-role="content" class="swipe">	
+			<ul data-role="listview" data-inset="true" data-filter="false">
+			<!--- <li><a href="alphabet.html">Alphabet</a></li> --->
+			<li><a href="#alphabet" id="hrefalphabet" data-transition="slide">English</a></li>
+			<li><a href="#hangul" id="hrefhangul" data-transition="slide">Korean</a></li>
+			
+		</div><!-- /content -->
+	
+
+	</div><!-- /page -->
+
+
+	<!-- Start of second page -->
+	<div data-role="page" id="alphabet" pageinit="onPageLoad()">
+	
+		<div data-role="header">
+			<h1>Alphabet</h1>
+			<a href="#home" data-role="button" data-icon="home" data-transition="slide">home</a>
+		</div><!-- /header -->
+	
+		<div data-role="content" height="100%" class="action">	
+			<table id="tableContent" width="100%" height="100%">
+				     <tbody>
+				          <tr height="100%">
+				               <td align="center" height="100%">
+					               <div id="letterDiven" style="font-size:1000%;font-weight:bold;vertical-align:top" align="top" >			               
+						               A
+						           </div>
+							</td>
+				              
+				          </tr>
+				     </tbody>
+			</table>		
+			</div>
+	
+	</div>
+
+	<!-- Start of third page -->
+	<div data-role="page" id="hangul">
+	
+		<div data-role="header">
+			<h1>Hangul</h1>
+			<a href="#home" data-role="button" data-icon="home">home</a>
+		</div><!-- /header -->
+	
+		<div data-role="content" height="100%" class="action" data-transition="slide">	
+			<table id="tableContent" width="100%" height="100%">
+				     <tbody>
+				          <tr height="100%">
+				               <td align="center" height="100%">
+					               <div id="letterDivko"  style="font-size:1000%;font-weight:bold;vertical-align:top" align="top" >			               
+						               	가
+						           </div>
+							</td>				              
+				          </tr>					
+				     </tbody>
+			</table>		
+				
+			</div>
+
+	</div>
+</body>
+</html>

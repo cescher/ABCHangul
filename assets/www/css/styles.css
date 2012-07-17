@@ -1,0 +1,26 @@
+/* @override http://localhost:8888/css/style.css */
+
+
+
+h1 {
+	text-align: center;
+	text-indent: -.12em;
+	color: #f4f1de;
+	font: 220px "anchor-web-1","anchor-web-2", 'Impact', sans-serif;
+	font-weight: 900;
+	display: inline-block;
+	margin: 0 auto;
+	line-height: 1;
+	width: 100%;
+	text-shadow: #863027 .01em .01em 0,
+		#863027 .02em .02em 0,
+		#863027 .03em .03em 0,
+		#863027 .04em .04em 0,
+		#863027 .05em .05em 0,
+		#863027 .06em .06em 0,
+		#863027 .07em .07em 0,			
+		#863027 .08em .08em 0,
+		#863027 .09em .09em 0,
+		#863027 .1em .1em 0;
+}
+
