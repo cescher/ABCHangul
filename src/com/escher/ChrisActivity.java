@@ -1,11 +1,14 @@
 package com.escher;
 
+import org.apache.cordova.DroidGap;
+
 import android.os.Bundle;
-import com.escher.free.R;
-import org.apache.cordova.*;
 import android.os.Handler;
-import com.google.ads.*;
 import android.widget.LinearLayout;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
 
 public class ChrisActivity extends DroidGap {
     /** Called when the activity is first created. */
